@@ -1,0 +1,39 @@
+import requests
+
+def get_user_info(username, bearer_token):
+    url = f"https://api.twitter.com/2/users/by/username/{username}"
+    headers = {
+        "Authorization": f"Bearer {bearer_token}"
+    }
+
+    response = requests.get(url, headers=headers)
+    
+    if response.status_code != 200:
+        print(f"Error: {response.status_code}")
+        return None
+
+    user_data = response.json().get("data")
+    
+    if user_data:
+        user_id = user_data['id']
+        name = user_data['name']
+        username = user_data['username']
+        public_metrics = user_data.get("public_metrics", {})
+        
+        followers_count = public_metrics.get("followers_count", "N/A")
+        following_count = public_metrics.get("following_count", "N/A")
+        tweet_count = public_metrics.get("tweet_count", "N/A")
+        
+        print(f"User Info for @{username}")
+        print(f"Name: {name}")
+        print(f"User ID: {user_id}")
+        print(f"Followers: {followers_count}")
+        print(f"Following: {following_count}")
+        print(f"Tweet Count: {tweet_count}")
+    else:
+        print("User not found.")
+
+# Replace 'your_bearer_token_here' with your actual Bearer Token from the Twitter API.
+bearer_token = 'your_bearer_token_here'
+username = input("Enter Twitter username: ")
+get_user_info(username, bearer_token)
