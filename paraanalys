@@ -1,0 +1,18 @@
+def paragraph_analysis(paragraph):
+    # Count characters (including spaces)
+    character_count = len(paragraph)
+    
+    # Count words
+    word_count = len(paragraph.split())
+    
+    return character_count, word_count
+
+# Input paragraph
+paragraph = input("Enter a paragraph: ")
+
+# Get character and word counts
+characters, words = paragraph_analysis(paragraph)
+
+# Display the results
+print(f"Number of characters: {characters}")
+print(f"Number of words: {words}")
